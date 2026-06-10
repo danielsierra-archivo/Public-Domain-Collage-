@@ -2,677 +2,817 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARCHIVO — Collage Maker</title>
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>PUBLIC DOMAIN COLLAGE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --ink: #1a1410;
-    --paper: #f2ead8;
-    --paper-dark: #e8dcc4;
-    --accent: #8b2e0f;
-    --muted: #9e8e78;
-    --border: #c8b89a;
-  }
+:root {
+  --black: #0a0a0a;
+  --white: #f5f5f3;
+  --gray: #888;
+  --border: #222;
+}
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'Space Mono', monospace;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Space Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+}
 
-  /* HEADER */
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--paper);
-    z-index: 100;
-    flex-shrink: 0;
-  }
+/* HEADER */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--black);
+  z-index: 200;
+}
 
-  .logo {
-    font-family: 'IM Fell English', serif;
-    font-size: 22px;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-  }
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  line-height: 1;
+  display: inline-flex;
+}
 
-  .logo span {
-    color: var(--accent);
-    font-style: italic;
-  }
+.logo .char {
+  display: inline-block;
+  animation: charIn 0.05s ease forwards;
+  opacity: 0;
+}
 
-  .header-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
+@keyframes charIn { to { opacity: 1; } }
 
-  button {
-    font-family: 'Space Mono', monospace;
-    cursor: pointer;
-    border: none;
-    outline: none;
-  }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
 
-  .btn {
-    padding: 7px 14px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--ink);
-    transition: all 0.15s;
-  }
+.logo-sub {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 16px;
+  color: var(--gray);
+  margin-left: 8px;
+  animation: pulse 3s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
 
-  .btn:hover {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-  }
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  .btn-accent {
-    background: var(--accent);
-    color: var(--paper);
-    border-color: var(--accent);
-  }
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.1s;
+}
 
-  .btn-accent:hover {
-    background: #6e2409;
-    border-color: #6e2409;
-  }
+.btn:hover { border-color: var(--white); color: var(--white); }
 
-  /* LAYOUT */
-  .app {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-  }
+.btn-primary {
+  border-color: var(--white);
+  color: var(--black);
+  background: var(--white);
+}
 
-  /* SIDEBAR */
+.btn-primary:hover { background: var(--gray); border-color: var(--gray); color: var(--black); }
+
+/* LAYOUT */
+.app {
+  display: flex;
+  position: fixed;
+  top: 48px;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  background: var(--black);
+  overflow: hidden;
+}
+
+/* NAV ACCORDION */
+.nav {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.nav::-webkit-scrollbar { width: 3px; }
+.nav::-webkit-scrollbar-thumb { background: var(--border); }
+
+.nav.hidden { display: none; }
+
+.nav-parent { border-bottom: 1px solid var(--border); }
+
+.nav-parent-btn {
+  width: 100%;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: var(--gray);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color 0.1s;
+}
+
+.nav-parent-btn:hover, .nav-parent-btn.open { color: var(--white); }
+
+.nav-arrow {
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+
+.nav-parent-btn.open .nav-arrow { transform: rotate(90deg); }
+
+.nav-children {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.nav-children.open { max-height: 300px; }
+
+.nav-child-btn {
+  width: 100%;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 16px 7px 24px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border);
+  color: var(--gray);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.1s;
+  display: block;
+}
+
+.nav-child-btn:hover, .nav-child-btn.active { color: var(--white); background: #111; }
+
+.random-btn {
+  width: 100%;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border);
+  color: var(--white);
+  cursor: pointer;
+  text-align: left;
+  font-style: italic;
+  transition: color 0.1s;
+  margin-top: auto;
+}
+
+.random-btn:hover { color: var(--gray); }
+
+/* LIBRARY PANEL */
+.library-panel {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.library-panel.visible { display: flex; }
+
+.library-back {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--gray);
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.1s;
+  flex-shrink: 0;
+}
+
+.library-back:hover { color: var(--white); }
+
+.library-cat-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  color: var(--white);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.library {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  align-content: start;
+}
+
+.library::-webkit-scrollbar { width: 3px; }
+.library::-webkit-scrollbar-thumb { background: var(--border); }
+
+.lib-img {
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background: #111;
+  filter: grayscale(100%);
+  transition: filter 0.2s;
+}
+
+.lib-img:hover { filter: grayscale(0%) contrast(1.1); }
+
+.lib-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.lib-img .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(245,245,243,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+  font-size: 18px;
+  color: var(--white);
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.lib-img:hover .overlay { opacity: 1; }
+
+.lib-msg {
+  grid-column: 1/-1;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  padding: 16px 0;
+  text-align: center;
+}
+
+/* CANVAS */
+.canvas-wrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0f0f0f;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.canvas-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  gap: 6px;
+  transition: opacity 0.3s;
+}
+
+.canvas-hint-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 8vw, 96px);
+  letter-spacing: 0.05em;
+  color: var(--white);
+  opacity: 0.04;
+  line-height: 1;
+  text-align: center;
+}
+
+.canvas-hint-sub {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  opacity: 0.4;
+}
+
+/* CANVAS ITEMS */
+.c-item {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+}
+
+.c-item:active { cursor: grabbing; }
+
+.c-item.selected .c-inner {
+  outline: 1px solid var(--white);
+  outline-offset: 2px;
+}
+
+.c-inner { position: relative; width: 100%; height: 100%; }
+
+.c-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+.c-controls {
+  position: absolute;
+  top: -26px; right: 0;
+  display: none;
+  gap: 2px;
+}
+
+.c-item.selected .c-controls { display: flex; }
+
+.c-ctrl {
+  width: 22px; height: 22px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.1s;
+}
+
+.c-ctrl:hover { background: var(--gray); }
+
+.c-resize {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 12px; height: 12px;
+  background: var(--white);
+  cursor: se-resize;
+  display: none;
+}
+
+.c-item.selected .c-resize { display: block; }
+
+/* STATUSBAR */
+.statusbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 24px;
+  border-top: 1px solid var(--border);
+  background: var(--black);
+  z-index: 200;
+}
+
+.statusbar span {
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* MOBILE */
+.toggle-sidebar {
+  display: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.toggle-sidebar:hover { color: var(--white); border-color: var(--white); }
+
+@media (max-width: 640px) {
   .sidebar {
-    width: 240px;
-    flex-shrink: 0;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    background: var(--paper-dark);
-    overflow: hidden;
+    position: fixed;
+    left: 0; top: 48px; bottom: 28px;
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+    z-index: 150;
   }
-
-  .sidebar-top {
-    padding: 14px;
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-  }
-
-  .sidebar-top label {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 6px;
-  }
-
-  .category-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-    margin-bottom: 10px;
-  }
-
-  .cat-btn {
-    padding: 6px 4px;
-    font-size: 9px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    border: 1px solid var(--border);
-    background: var(--paper);
-    color: var(--muted);
-    transition: all 0.15s;
-    text-align: center;
-  }
-
-  .cat-btn:hover, .cat-btn.active {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-  }
-
-  .random-btn {
-    width: 100%;
-    padding: 8px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 1px dashed var(--accent);
-    background: transparent;
-    color: var(--accent);
-    transition: all 0.15s;
-  }
-
-  .random-btn:hover {
-    background: var(--accent);
-    color: var(--paper);
-  }
-
-  /* IMAGE LIBRARY */
-  .library {
-    flex: 1;
-    overflow-y: auto;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    align-content: start;
-  }
-
-  .library::-webkit-scrollbar { width: 4px; }
-  .library::-webkit-scrollbar-track { background: transparent; }
-  .library::-webkit-scrollbar-thumb { background: var(--border); }
-
-  .lib-img-wrap {
-    position: relative;
-    aspect-ratio: 1;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    cursor: grab;
-    transition: all 0.15s;
-    background: var(--paper);
-  }
-
-  .lib-img-wrap:hover {
-    border-color: var(--ink);
-    transform: scale(1.02);
-  }
-
-  .lib-img-wrap:active { cursor: grabbing; }
-
-  .lib-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-    display: block;
-  }
-
-  .lib-img-wrap .add-icon {
-    position: absolute;
-    inset: 0;
-    background: rgba(26,20,16,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.15s;
-    font-size: 22px;
-    color: var(--paper);
-  }
-
-  .lib-img-wrap:hover .add-icon { opacity: 1; }
-
-  .loading-msg, .empty-msg {
-    grid-column: 1 / -1;
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    padding: 20px 0;
-    text-transform: uppercase;
-  }
-
-  /* CANVAS AREA */
-  .canvas-area {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    background:
-      linear-gradient(rgba(200,184,154,0.15) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(200,184,154,0.15) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-color: #ede5cf;
-  }
-
-  .canvas-hint {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    opacity: 0.35;
-    gap: 8px;
-  }
-
-  .canvas-hint-title {
-    font-family: 'IM Fell English', serif;
-    font-size: 28px;
-    font-style: italic;
-    color: var(--muted);
-  }
-
-  .canvas-hint-sub {
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* CANVAS ITEMS */
-  .canvas-item {
-    position: absolute;
-    cursor: grab;
-    user-select: none;
-    touch-action: none;
-  }
-
-  .canvas-item:active { cursor: grabbing; }
-
-  .canvas-item.selected .item-inner {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-
-  .item-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .canvas-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    pointer-events: none;
-  }
-
-  .item-controls {
-    position: absolute;
-    top: -28px;
-    right: 0;
-    display: none;
-    gap: 4px;
-  }
-
-  .canvas-item.selected .item-controls { display: flex; }
-
-  .item-ctrl-btn {
-    width: 22px;
-    height: 22px;
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: none;
-  }
-
-  .item-ctrl-btn:hover { background: var(--accent); }
-
-  /* Resize handle */
-  .resize-handle {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 14px;
-    height: 14px;
-    background: var(--accent);
-    cursor: se-resize;
-    display: none;
-  }
-
-  .canvas-item.selected .resize-handle { display: block; }
-
-  /* STATUS BAR */
-  .statusbar {
-    padding: 6px 16px;
-    border-top: 1px solid var(--border);
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-    display: flex;
-    gap: 20px;
-    flex-shrink: 0;
-    background: var(--paper);
-  }
+  .sidebar.open { transform: translateX(0); }
+  .canvas-wrap { width: 100%; }
+  .toggle-sidebar { display: flex; }
+}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">ARCHIVO <span>bruto</span></div>
-  <div class="header-actions">
+  <div style="display:flex;align-items:baseline;gap:6px;">
+    <span class="logo" id="logoText"></span>
+    <span class="logo-sub">collage</span>
+  </div>
+  <div class="header-right">
+    <button class="toggle-sidebar" id="toggleSidebar">Imágenes</button>
     <button class="btn" id="clearBtn">Limpiar</button>
-    <button class="btn btn-accent" id="downloadBtn">Descargar</button>
+    <button class="btn btn-primary" id="downloadBtn">Descargar</button>
   </div>
 </header>
 
 <div class="app">
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <label>Categoría</label>
-      <div class="category-grid">
-        <button class="cat-btn active" data-cat="botanical illustration">Botánica</button>
-        <button class="cat-btn" data-cat="antique map">Mapas</button>
-        <button class="cat-btn" data-cat="vintage portrait painting">Retratos</button>
-        <button class="cat-btn" data-cat="anatomy illustration">Anatomía</button>
-        <button class="cat-btn" data-cat="astronomical diagram">Astronomía</button>
-        <button class="cat-btn" data-cat="medieval illuminated manuscript">Medieval</button>
+  <aside class="sidebar" id="sidebar">
+    <nav class="nav" id="navMenu">
+      <div class="nav-parent">
+        <button class="nav-parent-btn">Botánica <span class="nav-arrow">›</span></button>
+        <div class="nav-children">
+          <button class="nav-child-btn" data-cat="botanical flower illustration vintage">Flores</button>
+          <button class="nav-child-btn" data-cat="mushroom fungi illustration vintage">Hongos</button>
+          <button class="nav-child-btn" data-cat="tree botanical illustration vintage">Árboles</button>
+          <button class="nav-child-btn" data-cat="insect entomology illustration vintage">Insectos</button>
+        </div>
       </div>
-      <button class="random-btn" id="randomBtn">⊕ Imagen aleatoria</button>
-    </div>
-    <div class="library" id="library">
-      <div class="loading-msg">Cargando...</div>
+      <div class="nav-parent">
+        <button class="nav-parent-btn">Arte <span class="nav-arrow">›</span></button>
+        <div class="nav-children">
+          <button class="nav-child-btn" data-cat="classical portrait painting vintage">Retratos</button>
+          <button class="nav-child-btn" data-cat="landscape painting vintage engraving">Paisajes</button>
+          <button class="nav-child-btn" data-cat="mythology painting classical">Mitología</button>
+          <button class="nav-child-btn" data-cat="classical nude sculpture painting">Desnudo clásico</button>
+        </div>
+      </div>
+      <div class="nav-parent">
+        <button class="nav-parent-btn">Ciencia <span class="nav-arrow">›</span></button>
+        <div class="nav-children">
+          <button class="nav-child-btn" data-cat="anatomy diagram vintage medical illustration">Anatomía</button>
+          <button class="nav-child-btn" data-cat="astronomical chart vintage celestial">Astronomía</button>
+          <button class="nav-child-btn" data-cat="zoology animal illustration vintage">Zoología</button>
+          <button class="nav-child-btn" data-cat="geology mineral illustration vintage">Geología</button>
+        </div>
+      </div>
+      <div class="nav-parent">
+        <button class="nav-parent-btn">Historia <span class="nav-arrow">›</span></button>
+        <div class="nav-children">
+          <button class="nav-child-btn" data-cat="antique map engraving historical">Mapas</button>
+          <button class="nav-child-btn" data-cat="medieval manuscript illuminated">Medieval</button>
+          <button class="nav-child-btn" data-cat="ancient egypt hieroglyphics illustration">Egipto antiguo</button>
+          <button class="nav-child-btn" data-cat="architecture engraving historical building">Arquitectura</button>
+        </div>
+      </div>
+      <div class="nav-parent">
+        <button class="nav-parent-btn">Imprenta <span class="nav-arrow">›</span></button>
+        <div class="nav-children">
+          <button class="nav-child-btn" data-cat="typography ornament vintage letterpress">Tipografía</button>
+          <button class="nav-child-btn" data-cat="vintage advertisement poster lithograph">Publicidad</button>
+          <button class="nav-child-btn" data-cat="vintage newspaper illustration engraving">Periódicos</button>
+          <button class="nav-child-btn" data-cat="vintage label etiquette packaging">Etiquetas</button>
+        </div>
+      </div>
+      <div class="nav-parent">
+        <button class="nav-parent-btn">Fotografía <span class="nav-arrow">›</span></button>
+        <div class="nav-children">
+          <button class="nav-child-btn" data-cat="daguerreotype portrait photograph vintage">Daguerreotipos</button>
+          <button class="nav-child-btn" data-cat="vintage portrait photograph 19th century">Retratos foto</button>
+          <button class="nav-child-btn" data-cat="vintage city photograph street 19th century">Ciudades antiguas</button>
+        </div>
+      </div>
+      <button class="random-btn" id="randomBtn">Aleatoria</button>
+    </nav>
+
+    <div class="library-panel" id="libraryPanel">
+      <button class="library-back" id="libraryBack">← Categorías</button>
+      <div class="library-cat-label" id="libraryCatLabel"></div>
+      <div class="library" id="library"></div>
     </div>
   </aside>
 
-  <div class="canvas-area" id="canvasArea">
+  <div class="canvas-wrap" id="canvasWrap">
     <div class="canvas-hint" id="canvasHint">
-      <div class="canvas-hint-title">Tu collage</div>
-      <div class="canvas-hint-sub">Haz clic en las imágenes para añadirlas</div>
+      <div class="canvas-hint-title">PUBLIC DOMAIN<br>COLLAGE</div>
+      <div class="canvas-hint-sub">Selecciona imágenes para comenzar</div>
     </div>
   </div>
 </div>
 
 <div class="statusbar">
   <span id="statusItems">0 elementos</span>
-  <span id="statusCat">Categoría: Botánica</span>
+  <span id="statusCat">—</span>
 </div>
 
 <script>
-const WIKI_API = 'https://en.wikipedia.org/w/api.php';
-let items = [];
-let selectedId = null;
-let currentCat = 'botanical illustration';
-let itemCount = 0;
+const API = 'https://en.wikipedia.org/w/api.php';
+let dragState = null, resizeState = null, itemCount = 0;
+let currentCat = '';
+let isLoading = false, hasMore = true, lastOffset = 0;
 
-// Drag state
-let dragState = null;
-let resizeState = null;
-
-// ---- WIKIMEDIA FETCH ----
-async function fetchImages(query, count = 20) {
-  const params = new URLSearchParams({
-    action: 'query',
-    generator: 'search',
+// FETCH
+async function fetchImages(query, count = 20, offset = 0) {
+  const p = new URLSearchParams({
+    action: 'query', generator: 'search',
     gsrsearch: `${query} filetype:bitmap`,
-    gsrnamespace: 6,
-    gsrlimit: count,
-    prop: 'imageinfo',
-    iiprop: 'url|size',
-    iiurlwidth: 300,
-    format: 'json',
-    origin: '*'
+    gsrnamespace: 6, gsrlimit: count,
+    gsroffset: offset,
+    prop: 'imageinfo', iiprop: 'url|size',
+    iiurlwidth: 300, format: 'json', origin: '*'
   });
-
   try {
-    const res = await fetch(`${WIKI_API}?${params}`);
-    const data = await res.json();
-    if (!data.query || !data.query.pages) return [];
-    return Object.values(data.query.pages)
-      .filter(p => p.imageinfo && p.imageinfo[0].thumburl)
-      .map(p => ({
-        thumb: p.imageinfo[0].thumburl,
-        full: p.imageinfo[0].url,
-        title: p.title.replace('File:', '').replace(/\.[^.]+$/, '')
-      }));
-  } catch(e) {
-    return [];
-  }
+    const r = await fetch(`${API}?${p}`);
+    const d = await r.json();
+    return {
+      imgs: d.query?.pages ? Object.values(d.query.pages)
+        .filter(p => p.imageinfo?.[0]?.thumburl)
+        .map(p => ({ thumb: p.imageinfo[0].thumburl, full: p.imageinfo[0].url })) : [],
+      more: !!d.continue
+    };
+  } catch { return { imgs: [], more: false }; }
 }
 
-async function loadCategory(cat) {
+async function loadCat(cat, reset = true) {
+  if (isLoading) return;
   const lib = document.getElementById('library');
-  lib.innerHTML = '<div class="loading-msg">Cargando...</div>';
-  document.getElementById('statusCat').textContent = `Categoría: ${getCatLabel(cat)}`;
-
-  const imgs = await fetchImages(cat, 24);
-  lib.innerHTML = '';
-
-  if (!imgs.length) {
-    lib.innerHTML = '<div class="empty-msg">Sin resultados</div>';
+  if (reset) {
+    lib.innerHTML = '<div class="lib-msg">Cargando...</div>';
+    lastOffset = 0;
+    hasMore = true;
+  }
+  isLoading = true;
+  const { imgs, more } = await fetchImages(cat, 20, lastOffset);
+  if (reset) lib.innerHTML = '';
+  if (!imgs.length && reset) {
+    lib.innerHTML = '<div class="lib-msg">Sin resultados</div>';
+    isLoading = false;
     return;
   }
-
   imgs.forEach(img => {
-    const wrap = document.createElement('div');
-    wrap.className = 'lib-img-wrap';
-    wrap.title = img.title;
-    wrap.innerHTML = `
-      <img src="${img.thumb}" alt="${img.title}" loading="lazy">
-      <div class="add-icon">+</div>
-    `;
-    wrap.addEventListener('click', () => addToCanvas(img.thumb, img.full));
-    lib.appendChild(wrap);
+    const d = document.createElement('div');
+    d.className = 'lib-img';
+    d.innerHTML = `<img src="${img.thumb}" loading="lazy"><div class="overlay">+</div>`;
+    d.addEventListener('click', () => {
+      addItem(img.thumb, img.full);
+      if (window.innerWidth <= 640) toggleSidebarFn();
+    });
+    lib.appendChild(d);
   });
+  lastOffset += 20;
+  hasMore = more;
+  isLoading = false;
 }
 
-function getCatLabel(cat) {
-  const map = {
-    'botanical illustration': 'Botánica',
-    'antique map': 'Mapas',
-    'vintage portrait painting': 'Retratos',
-    'anatomy illustration': 'Anatomía',
-    'astronomical diagram': 'Astronomía',
-    'medieval illuminated manuscript': 'Medieval'
-  };
-  return map[cat] || cat;
-}
+// SCROLL INFINITO
+document.getElementById('library').addEventListener('scroll', function() {
+  if (this.scrollHeight - this.scrollTop - this.clientHeight < 150 && !isLoading && hasMore) {
+    loadCat(currentCat, false);
+  }
+});
 
-// ---- CANVAS ----
-function addToCanvas(thumb, full) {
-  const area = document.getElementById('canvasArea');
+// ADD TO CANVAS
+function addItem(thumb, full) {
   document.getElementById('canvasHint').style.opacity = '0';
-
+  const wrap = document.getElementById('canvasWrap');
   const id = ++itemCount;
-  const size = 180 + Math.random() * 80;
-  const x = 40 + Math.random() * (area.offsetWidth - size - 80);
-  const y = 40 + Math.random() * (area.offsetHeight - size - 80);
-
+  const size = 160 + Math.random() * 100;
+  const x = 20 + Math.random() * Math.max(20, wrap.offsetWidth - size - 40);
+  const y = 20 + Math.random() * Math.max(20, wrap.offsetHeight - size - 40);
   const el = document.createElement('div');
-  el.className = 'canvas-item';
+  el.className = 'c-item';
   el.dataset.id = id;
-  el.style.cssText = `left:${x}px;top:${y}px;width:${size}px;height:${size}px;`;
-
+  el.style.cssText = `left:${x}px;top:${y}px;width:${size}px;height:${size}px;z-index:${id}`;
   el.innerHTML = `
-    <div class="item-inner">
-      <div class="item-controls">
-        <button class="item-ctrl-btn" data-action="up" title="Subir capa">↑</button>
-        <button class="item-ctrl-btn" data-action="down" title="Bajar capa">↓</button>
-        <button class="item-ctrl-btn" data-action="delete" title="Eliminar">×</button>
+    <div class="c-inner">
+      <div class="c-controls">
+        <button class="c-ctrl" data-a="up">↑</button>
+        <button class="c-ctrl" data-a="down">↓</button>
+        <button class="c-ctrl" data-a="del">×</button>
       </div>
       <img src="${thumb}" data-full="${full}" draggable="false">
-      <div class="resize-handle"></div>
-    </div>
-  `;
-
-  // Drag
-  el.addEventListener('mousedown', onItemMouseDown);
-
-  // Controls
-  el.querySelectorAll('.item-ctrl-btn').forEach(btn => {
-    btn.addEventListener('mousedown', e => e.stopPropagation());
-    btn.addEventListener('click', e => {
+      <div class="c-resize"></div>
+    </div>`;
+  el.addEventListener('mousedown', onItemDown);
+  el.addEventListener('touchstart', onItemTouch, { passive: false });
+  el.querySelectorAll('.c-ctrl').forEach(b => {
+    b.addEventListener('mousedown', e => e.stopPropagation());
+    b.addEventListener('click', e => {
       e.stopPropagation();
-      const action = btn.dataset.action;
-      if (action === 'delete') { el.remove(); updateStatus(); }
-      if (action === 'up') el.style.zIndex = (parseInt(el.style.zIndex || 0) + 1);
-      if (action === 'down') el.style.zIndex = Math.max(0, (parseInt(el.style.zIndex || 0) - 1));
+      if (b.dataset.a === 'del') { el.remove(); updateStatus(); }
+      if (b.dataset.a === 'up') el.style.zIndex = +el.style.zIndex + 1;
+      if (b.dataset.a === 'down') el.style.zIndex = Math.max(1, +el.style.zIndex - 1);
     });
   });
-
-  // Resize
-  el.querySelector('.resize-handle').addEventListener('mousedown', onResizeMouseDown);
-
-  area.appendChild(el);
+  el.querySelector('.c-resize').addEventListener('mousedown', onResizeDown);
+  el.querySelector('.c-resize').addEventListener('touchstart', onResizeTouch, { passive: false });
+  wrap.appendChild(el);
   selectItem(el);
   updateStatus();
 }
 
 function selectItem(el) {
-  document.querySelectorAll('.canvas-item').forEach(i => i.classList.remove('selected'));
+  document.querySelectorAll('.c-item').forEach(i => i.classList.remove('selected'));
   if (el) el.classList.add('selected');
-  selectedId = el ? el.dataset.id : null;
 }
 
-function onItemMouseDown(e) {
-  if (e.target.classList.contains('resize-handle') || e.target.classList.contains('item-ctrl-btn')) return;
+// DRAG
+function onItemDown(e) {
+  if (e.target.classList.contains('c-resize') || e.target.classList.contains('c-ctrl')) return;
   e.preventDefault();
   const el = e.currentTarget;
   selectItem(el);
-  dragState = {
-    el,
-    startX: e.clientX - el.offsetLeft,
-    startY: e.clientY - el.offsetTop
-  };
+  dragState = { el, sx: e.clientX - el.offsetLeft, sy: e.clientY - el.offsetTop };
 }
 
-function onResizeMouseDown(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const el = e.target.closest('.canvas-item');
-  resizeState = {
-    el,
-    startX: e.clientX,
-    startY: e.clientY,
-    startW: el.offsetWidth,
-    startH: el.offsetHeight
-  };
+function onResizeDown(e) {
+  e.preventDefault(); e.stopPropagation();
+  const el = e.target.closest('.c-item');
+  resizeState = { el, sx: e.clientX, sy: e.clientY, sw: el.offsetWidth, sh: el.offsetHeight };
 }
 
 document.addEventListener('mousemove', e => {
   if (dragState) {
-    const area = document.getElementById('canvasArea');
-    const rect = area.getBoundingClientRect();
-    let x = e.clientX - dragState.startX;
-    let y = e.clientY - dragState.startY;
-    x = Math.max(0, Math.min(x, area.offsetWidth - dragState.el.offsetWidth));
-    y = Math.max(0, Math.min(y, area.offsetHeight - dragState.el.offsetHeight));
-    dragState.el.style.left = x + 'px';
-    dragState.el.style.top = y + 'px';
+    const wrap = document.getElementById('canvasWrap');
+    dragState.el.style.left = Math.max(0, Math.min(e.clientX - dragState.sx, wrap.offsetWidth - dragState.el.offsetWidth)) + 'px';
+    dragState.el.style.top = Math.max(0, Math.min(e.clientY - dragState.sy, wrap.offsetHeight - dragState.el.offsetHeight)) + 'px';
   }
   if (resizeState) {
-    const dx = e.clientX - resizeState.startX;
-    const dy = e.clientY - resizeState.startY;
-    const newW = Math.max(60, resizeState.startW + dx);
-    const newH = Math.max(60, resizeState.startH + dy);
-    resizeState.el.style.width = newW + 'px';
-    resizeState.el.style.height = newH + 'px';
+    resizeState.el.style.width = Math.max(60, resizeState.sw + e.clientX - resizeState.sx) + 'px';
+    resizeState.el.style.height = Math.max(60, resizeState.sh + e.clientY - resizeState.sy) + 'px';
   }
 });
 
-document.addEventListener('mouseup', () => {
-  dragState = null;
-  resizeState = null;
-});
+document.addEventListener('mouseup', () => { dragState = null; resizeState = null; });
 
-document.getElementById('canvasArea').addEventListener('mousedown', e => {
-  if (e.target === e.currentTarget || e.target.id === 'canvasHint' || e.target.closest('.canvas-hint')) {
-    selectItem(null);
+// TOUCH
+function onItemTouch(e) {
+  if (e.target.classList.contains('c-resize')) return;
+  selectItem(e.currentTarget);
+  const t = e.touches[0];
+  dragState = { el: e.currentTarget, sx: t.clientX - e.currentTarget.offsetLeft, sy: t.clientY - e.currentTarget.offsetTop };
+}
+
+function onResizeTouch(e) {
+  e.preventDefault(); e.stopPropagation();
+  const el = e.target.closest('.c-item');
+  const t = e.touches[0];
+  resizeState = { el, sx: t.clientX, sy: t.clientY, sw: el.offsetWidth, sh: el.offsetHeight };
+}
+
+document.addEventListener('touchmove', e => {
+  const t = e.touches[0];
+  if (dragState) {
+    const wrap = document.getElementById('canvasWrap');
+    dragState.el.style.left = Math.max(0, Math.min(t.clientX - dragState.sx, wrap.offsetWidth - dragState.el.offsetWidth)) + 'px';
+    dragState.el.style.top = Math.max(0, Math.min(t.clientY - dragState.sy, wrap.offsetHeight - dragState.el.offsetHeight)) + 'px';
+    e.preventDefault();
   }
+  if (resizeState) {
+    resizeState.el.style.width = Math.max(60, resizeState.sw + t.clientX - resizeState.sx) + 'px';
+    resizeState.el.style.height = Math.max(60, resizeState.sh + t.clientY - resizeState.sy) + 'px';
+    e.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('touchend', () => { dragState = null; resizeState = null; });
+
+document.getElementById('canvasWrap').addEventListener('mousedown', e => {
+  if (e.target === e.currentTarget || e.target.closest('.canvas-hint')) selectItem(null);
 });
 
-// ---- BUTTONS ----
-document.querySelectorAll('.cat-btn').forEach(btn => {
+// ACCORDION
+document.querySelectorAll('.nav-parent-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentCat = btn.dataset.cat;
-    loadCategory(currentCat);
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.nav-parent-btn').forEach(b => { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
+    if (!isOpen) { btn.classList.add('open'); btn.nextElementSibling.classList.add('open'); }
   });
 });
 
-document.getElementById('randomBtn').addEventListener('click', async () => {
-  const randomTerms = ['engraving', 'vintage illustration', 'woodcut print', 'etching antique', 'lithograph 19th century'];
-  const term = randomTerms[Math.floor(Math.random() * randomTerms.length)];
-  const imgs = await fetchImages(term, 1);
-  if (imgs.length) addToCanvas(imgs[0].thumb, imgs[0].full);
+document.querySelectorAll('.nav-child-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-child-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCat = btn.dataset.cat;
+    document.getElementById('statusCat').textContent = btn.textContent.trim();
+    document.getElementById('libraryCatLabel').textContent = btn.textContent.trim();
+    document.getElementById('navMenu').classList.add('hidden');
+    document.getElementById('libraryPanel').classList.add('visible');
+    loadCat(currentCat);
+  });
 });
 
+document.getElementById('libraryBack').addEventListener('click', () => {
+  document.getElementById('navMenu').classList.remove('hidden');
+  document.getElementById('libraryPanel').classList.remove('visible');
+});
+
+// RANDOM
+document.getElementById('randomBtn').addEventListener('click', async () => {
+  const terms = ['engraving antique', 'woodcut print historical', 'lithograph 19th century', 'etching vintage', 'daguerreotype portrait'];
+  const { imgs } = await fetchImages(terms[Math.floor(Math.random() * terms.length)], 5);
+  if (imgs.length) addItem(imgs[Math.floor(Math.random() * imgs.length)].thumb, imgs[0].full);
+});
+
+// CLEAR
 document.getElementById('clearBtn').addEventListener('click', () => {
-  document.querySelectorAll('.canvas-item').forEach(el => el.remove());
-  document.getElementById('canvasHint').style.opacity = '0.35';
+  document.querySelectorAll('.c-item').forEach(el => el.remove());
+  document.getElementById('canvasHint').style.opacity = '1';
   updateStatus();
 });
 
-document.getElementById('downloadBtn').addEventListener('click', downloadCollage);
-
 function updateStatus() {
-  const count = document.querySelectorAll('.canvas-item').length;
-  document.getElementById('statusItems').textContent = `${count} elemento${count !== 1 ? 's' : ''}`;
+  const n = document.querySelectorAll('.c-item').length;
+  document.getElementById('statusItems').textContent = `${n} elemento${n !== 1 ? 's' : ''}`;
 }
 
-// ---- DOWNLOAD (html2canvas via CDN) ----
-async function downloadCollage() {
-  const btn = document.getElementById('downloadBtn');
-  btn.textContent = 'Procesando...';
-  btn.disabled = true;
+// MOBILE
+function toggleSidebarFn() { document.getElementById('sidebar').classList.toggle('open'); }
+document.getElementById('toggleSidebar').addEventListener('click', toggleSidebarFn);
 
+// DOWNLOAD
+document.getElementById('downloadBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('downloadBtn');
+  btn.textContent = '...'; btn.disabled = true;
   try {
     if (typeof html2canvas === 'undefined') {
-      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
-    }
-
-    // Load full-res images
-    const canvasItems = document.querySelectorAll('.canvas-item img');
-    await Promise.all([...canvasItems].map(img => {
-      return new Promise(res => {
-        const hi = new Image();
-        hi.crossOrigin = 'anonymous';
-        hi.onload = () => { img.src = hi.src; res(); };
-        hi.onerror = res;
-        hi.src = img.dataset.full || img.src;
+      await new Promise((res, rej) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        s.onload = res; s.onerror = rej;
+        document.head.appendChild(s);
       });
-    }));
-
-    const area = document.getElementById('canvasArea');
-    const canvas = await html2canvas(area, {
-      useCORS: true,
-      allowTaint: false,
-      backgroundColor: '#ede5cf',
-      scale: 2
+    }
+    const canvas = await html2canvas(document.getElementById('canvasWrap'), {
+      useCORS: true, allowTaint: false, backgroundColor: '#0f0f0f', scale: 2
     });
-
     const link = document.createElement('a');
-    link.download = `archivo-bruto-${Date.now()}.jpg`;
+    link.download = `pdc-${Date.now()}.jpg`;
     link.href = canvas.toDataURL('image/jpeg', 0.92);
     link.click();
-  } catch(e) {
-    alert('No se pudo exportar. Intenta con menos imágenes o prueba en Chrome.');
-  } finally {
-    btn.textContent = 'Descargar';
-    btn.disabled = false;
-  }
-}
+  } catch { alert('Error al exportar. Intenta en Chrome.'); }
+  finally { btn.textContent = 'Descargar'; btn.disabled = false; }
+});
 
-function loadScript(src) {
-  return new Promise((res, rej) => {
-    const s = document.createElement('script');
-    s.src = src;
-    s.onload = res;
-    s.onerror = rej;
-    document.head.appendChild(s);
+// LOGO ANIMATION
+function animateLogo() {
+  const el = document.getElementById('logoText');
+  el.innerHTML = '';
+  [...'PUBLIC DOMAIN'].forEach((char, i) => {
+    const s = document.createElement('span');
+    s.className = 'char';
+    s.textContent = char === ' ' ? '\u00A0' : char;
+    s.style.animationDelay = (i * 80) + 'ms';
+    el.appendChild(s);
   });
 }
 
-// ---- INIT ----
-loadCategory(currentCat);
+animateLogo();
+setInterval(animateLogo, 5000);
 </script>
 </body>
 </html>
