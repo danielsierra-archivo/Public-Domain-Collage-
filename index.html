@@ -7,448 +7,72 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --black: #0a0a0a;
-  --white: #f5f5f3;
-  --gray: #888;
-  --border: #222;
-}
-
-html, body {
-  height: 100%;
-  overflow: hidden;
-  background: var(--black);
-  color: var(--white);
-  font-family: 'Space Mono', monospace;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* HEADER */
-header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--black);
-  z-index: 200;
-}
-
-.logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  letter-spacing: 0.12em;
-  color: var(--white);
-  line-height: 1;
-  display: inline-flex;
-}
-
-.logo .char {
-  display: inline-block;
-  animation: charIn 0.05s ease forwards;
-  opacity: 0;
-}
-
+:root { --black: #0a0a0a; --white: #f5f5f3; --gray: #888; --border: #222; }
+html, body { height: 100%; overflow: hidden; background: var(--black); color: var(--white); font-family: 'Space Mono', monospace; -webkit-font-smoothing: antialiased; }
+header { position: fixed; top: 0; left: 0; right: 0; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid var(--border); background: var(--black); z-index: 200; }
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.12em; color: var(--white); line-height: 1; display: inline-flex; }
+.logo .char { display: inline-block; animation: charIn 0.05s ease forwards; opacity: 0; }
 @keyframes charIn { to { opacity: 1; } }
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
-}
-
-.logo-sub {
-  font-family: 'Permanent Marker', cursive;
-  font-size: 16px;
-  color: var(--gray);
-  margin-left: 8px;
-  animation: pulse 3s ease-in-out infinite;
-  animation-delay: 1.5s;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--gray);
-  cursor: pointer;
-  transition: all 0.1s;
-}
-
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+.logo-sub { font-family: 'Permanent Marker', cursive; font-size: 16px; color: var(--gray); margin-left: 8px; animation: pulse 3s ease-in-out infinite; animation-delay: 1.5s; }
+.header-right { display: flex; align-items: center; gap: 8px; }
+.btn { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 12px; border: 1px solid var(--border); background: transparent; color: var(--gray); cursor: pointer; transition: all 0.1s; }
 .btn:hover { border-color: var(--white); color: var(--white); }
-
-.btn-primary {
-  border-color: var(--white);
-  color: var(--black);
-  background: var(--white);
-}
-
+.btn-primary { border-color: var(--white); color: var(--black); background: var(--white); }
 .btn-primary:hover { background: var(--gray); border-color: var(--gray); color: var(--black); }
-
-/* LAYOUT */
-.app {
-  display: flex;
-  position: fixed;
-  top: 48px;
-  bottom: 28px;
-  left: 0;
-  right: 0;
-}
-
-/* SIDEBAR */
-.sidebar {
-  width: 220px;
-  flex-shrink: 0;
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  background: var(--black);
-  overflow: hidden;
-}
-
-/* NAV ACCORDION */
-.nav {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  flex: 1;
-}
-
+.btn.active { border-color: var(--white); color: var(--white); }
+.app { display: flex; position: fixed; top: 48px; bottom: 28px; left: 0; right: 0; }
+.sidebar { width: 220px; flex-shrink: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; background: var(--black); overflow: hidden; }
+.nav { display: flex; flex-direction: column; overflow-y: auto; flex: 1; }
 .nav::-webkit-scrollbar { width: 3px; }
 .nav::-webkit-scrollbar-thumb { background: var(--border); }
-
 .nav.hidden { display: none; }
-
 .nav-parent { border-bottom: 1px solid var(--border); }
-
-.nav-parent-btn {
-  width: 100%;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  letter-spacing: 0.05em;
-  padding: 10px 16px;
-  background: transparent;
-  border: none;
-  color: var(--gray);
-  cursor: pointer;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: color 0.1s;
-}
-
+.nav-parent-btn { width: 100%; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; padding: 10px 16px; background: transparent; border: none; color: var(--gray); cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between; transition: color 0.1s; }
 .nav-parent-btn:hover, .nav-parent-btn.open { color: var(--white); }
-
-.nav-arrow {
-  font-size: 10px;
-  transition: transform 0.2s;
-}
-
+.nav-arrow { font-size: 10px; transition: transform 0.2s; }
 .nav-parent-btn.open .nav-arrow { transform: rotate(90deg); }
-
-.nav-children {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease;
-}
-
+.nav-children { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
 .nav-children.open { max-height: 300px; }
-
-.nav-child-btn {
-  width: 100%;
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 7px 16px 7px 24px;
-  background: transparent;
-  border: none;
-  border-top: 1px solid var(--border);
-  color: var(--gray);
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.1s;
-  display: block;
-}
-
+.nav-child-btn { width: 100%; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 16px 7px 24px; background: transparent; border: none; border-top: 1px solid var(--border); color: var(--gray); cursor: pointer; text-align: left; transition: all 0.1s; display: block; }
 .nav-child-btn:hover, .nav-child-btn.active { color: var(--white); background: #111; }
-
-.random-btn {
-  width: 100%;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  letter-spacing: 0.05em;
-  padding: 10px 16px;
-  background: transparent;
-  border: none;
-  border-top: 1px solid var(--border);
-  color: var(--white);
-  cursor: pointer;
-  text-align: left;
-  font-style: italic;
-  transition: color 0.1s;
-  margin-top: auto;
-}
-
+.random-btn { width: 100%; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; padding: 10px 16px; background: transparent; border: none; border-top: 1px solid var(--border); color: var(--white); cursor: pointer; text-align: left; font-style: italic; transition: color 0.1s; margin-top: auto; }
 .random-btn:hover { color: var(--gray); }
-
-/* LIBRARY PANEL */
-.library-panel {
-  display: none;
-  flex-direction: column;
-  flex: 1;
-  overflow: hidden;
-}
-
+.library-panel { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 .library-panel.visible { display: flex; }
-
-.library-back {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 10px 16px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--border);
-  color: var(--gray);
-  cursor: pointer;
-  text-align: left;
-  transition: color 0.1s;
-  flex-shrink: 0;
-}
-
+.library-back { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 16px; background: transparent; border: none; border-bottom: 1px solid var(--border); color: var(--gray); cursor: pointer; text-align: left; transition: color 0.1s; flex-shrink: 0; }
 .library-back:hover { color: var(--white); }
-
-.library-cat-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  padding: 8px 16px;
-  color: var(--white);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-
-.library {
-  flex: 1;
-  overflow-y: auto;
-  padding: 8px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  align-content: start;
-}
-
+.library-cat-label { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.05em; padding: 8px 16px; color: var(--white); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.library { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; align-content: start; width: 100%; }
 .library::-webkit-scrollbar { width: 3px; }
 .library::-webkit-scrollbar-thumb { background: var(--border); }
-
-.lib-img {
-  aspect-ratio: 1;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-  background: #111;
-  filter: grayscale(100%);
-  transition: filter 0.2s;
-}
-
+.lib-img { position: relative; width: 100%; padding-bottom: 130%; overflow: hidden; cursor: pointer; background: #111; filter: grayscale(100%); transition: filter 0.2s; }
 .lib-img:hover { filter: grayscale(0%) contrast(1.1); }
-
-.lib-img img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-}
-
-.lib-img .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(245,245,243,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.15s;
-  font-size: 18px;
-  color: var(--white);
-  font-family: 'Bebas Neue', sans-serif;
-}
-
+.lib-img img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.lib-img .overlay { position: absolute; inset: 0; background: rgba(245,245,243,0.15); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.15s; font-size: 18px; color: var(--white); font-family: 'Bebas Neue', sans-serif; }
 .lib-img:hover .overlay { opacity: 1; }
-
-.lib-msg {
-  grid-column: 1/-1;
-  font-size: 8px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gray);
-  padding: 16px 0;
-  text-align: center;
-}
-
-/* CANVAS */
-.canvas-wrap {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  background: #0f0f0f;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.canvas-hint {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  gap: 6px;
-  transition: opacity 0.3s;
-}
-
-.canvas-hint-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(48px, 8vw, 96px);
-  letter-spacing: 0.05em;
-  color: var(--white);
-  opacity: 0.04;
-  line-height: 1;
-  text-align: center;
-}
-
-.canvas-hint-sub {
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gray);
-  opacity: 0.4;
-}
-
-/* CANVAS ITEMS */
-.c-item {
-  position: absolute;
-  cursor: grab;
-  user-select: none;
-}
-
+.lib-msg { grid-column: 1/-1; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); padding: 16px 0; text-align: center; }
+.canvas-wrap { flex: 1; position: relative; overflow: hidden; background: #0f0f0f; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 48px 48px; }
+.canvas-hint { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; gap: 6px; transition: opacity 0.3s; }
+.canvas-hint-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 96px); letter-spacing: 0.05em; color: var(--white); opacity: 0.04; line-height: 1; text-align: center; }
+.canvas-hint-sub { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); opacity: 0.4; }
+.c-item { position: absolute; cursor: grab; user-select: none; }
 .c-item:active { cursor: grabbing; }
-
-.c-item.selected .c-inner {
-  outline: 1px solid var(--white);
-  outline-offset: 2px;
-}
-
+.c-item.selected .c-inner { outline: 1px solid var(--white); outline-offset: 2px; }
 .c-inner { position: relative; width: 100%; height: 100%; }
-
-.c-item img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-  filter: grayscale(100%);
-}
-
-.c-controls {
-  position: absolute;
-  top: -26px; right: 0;
-  display: none;
-  gap: 2px;
-}
-
+.c-item img { width: 100%; height: auto; display: block; pointer-events: none; }
+.c-controls { position: absolute; top: -26px; right: 0; display: none; gap: 2px; }
 .c-item.selected .c-controls { display: flex; }
-
-.c-ctrl {
-  width: 22px; height: 22px;
-  background: var(--white);
-  color: var(--black);
-  font-size: 11px;
-  font-family: 'Space Mono', monospace;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.1s;
-}
-
+.c-ctrl { width: 22px; height: 22px; background: var(--white); color: var(--black); font-size: 11px; font-family: 'Space Mono', monospace; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.1s; }
 .c-ctrl:hover { background: var(--gray); }
-
-.c-resize {
-  position: absolute;
-  bottom: 0; right: 0;
-  width: 12px; height: 12px;
-  background: var(--white);
-  cursor: se-resize;
-  display: none;
-}
-
+.c-resize { position: absolute; bottom: 0; right: 0; width: 12px; height: 12px; background: var(--white); cursor: se-resize; display: none; }
 .c-item.selected .c-resize { display: block; }
-
-/* STATUSBAR */
-.statusbar {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  gap: 24px;
-  border-top: 1px solid var(--border);
-  background: var(--black);
-  z-index: 200;
-}
-
-.statusbar span {
-  font-size: 8px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gray);
-}
-
-/* MOBILE */
-.toggle-sidebar {
-  display: none;
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 6px 10px;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--gray);
-  cursor: pointer;
-}
-
+.statusbar { position: fixed; bottom: 0; left: 0; right: 0; height: 28px; display: flex; align-items: center; padding: 0 16px; gap: 24px; border-top: 1px solid var(--border); background: var(--black); z-index: 200; }
+.statusbar span { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); }
+.toggle-sidebar { display: none; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; background: transparent; border: 1px solid var(--border); color: var(--gray); cursor: pointer; }
 .toggle-sidebar:hover { color: var(--white); border-color: var(--white); }
-
 @media (max-width: 640px) {
-  .sidebar {
-    position: fixed;
-    left: 0; top: 48px; bottom: 28px;
-    transform: translateX(-100%);
-    transition: transform 0.2s;
-    z-index: 150;
-  }
+  .sidebar { position: fixed; left: 0; top: 48px; bottom: 28px; transform: translateX(-100%); transition: transform 0.2s; z-index: 150; }
   .sidebar.open { transform: translateX(0); }
   .canvas-wrap { width: 100%; }
   .toggle-sidebar { display: flex; }
@@ -464,6 +88,7 @@ header {
   </div>
   <div class="header-right">
     <button class="toggle-sidebar" id="toggleSidebar">Imágenes</button>
+    <button class="btn" id="colorBtn">B&amp;N</button>
     <button class="btn" id="clearBtn">Limpiar</button>
     <button class="btn btn-primary" id="downloadBtn">Descargar</button>
   </div>
@@ -471,62 +96,72 @@ header {
 
 <div class="app">
   <aside class="sidebar" id="sidebar">
-    <nav class="nav" id="navMenu">
-      <div class="nav-parent">
-        <button class="nav-parent-btn">Botánica <span class="nav-arrow">›</span></button>
-        <div class="nav-children">
-          <button class="nav-child-btn" data-cat="botanical flower illustration vintage">Flores</button>
-          <button class="nav-child-btn" data-cat="mushroom fungi illustration vintage">Hongos</button>
-          <button class="nav-child-btn" data-cat="tree botanical illustration vintage">Árboles</button>
-          <button class="nav-child-btn" data-cat="insect entomology illustration vintage">Insectos</button>
-        </div>
-      </div>
-      <div class="nav-parent">
-        <button class="nav-parent-btn">Arte <span class="nav-arrow">›</span></button>
-        <div class="nav-children">
-          <button class="nav-child-btn" data-cat="classical portrait painting vintage">Retratos</button>
-          <button class="nav-child-btn" data-cat="landscape painting vintage engraving">Paisajes</button>
-          <button class="nav-child-btn" data-cat="mythology painting classical">Mitología</button>
-          <button class="nav-child-btn" data-cat="classical nude sculpture painting">Desnudo clásico</button>
-        </div>
-      </div>
-      <div class="nav-parent">
-        <button class="nav-parent-btn">Ciencia <span class="nav-arrow">›</span></button>
-        <div class="nav-children">
-          <button class="nav-child-btn" data-cat="anatomy diagram vintage medical illustration">Anatomía</button>
-          <button class="nav-child-btn" data-cat="astronomical chart vintage celestial">Astronomía</button>
-          <button class="nav-child-btn" data-cat="zoology animal illustration vintage">Zoología</button>
-          <button class="nav-child-btn" data-cat="geology mineral illustration vintage">Geología</button>
-        </div>
-      </div>
-      <div class="nav-parent">
-        <button class="nav-parent-btn">Historia <span class="nav-arrow">›</span></button>
-        <div class="nav-children">
-          <button class="nav-child-btn" data-cat="antique map engraving historical">Mapas</button>
-          <button class="nav-child-btn" data-cat="medieval manuscript illuminated">Medieval</button>
-          <button class="nav-child-btn" data-cat="ancient egypt hieroglyphics illustration">Egipto antiguo</button>
-          <button class="nav-child-btn" data-cat="architecture engraving historical building">Arquitectura</button>
-        </div>
-      </div>
-      <div class="nav-parent">
-        <button class="nav-parent-btn">Imprenta <span class="nav-arrow">›</span></button>
-        <div class="nav-children">
-          <button class="nav-child-btn" data-cat="typography ornament vintage letterpress">Tipografía</button>
-          <button class="nav-child-btn" data-cat="vintage advertisement poster lithograph">Publicidad</button>
-          <button class="nav-child-btn" data-cat="vintage newspaper illustration engraving">Periódicos</button>
-          <button class="nav-child-btn" data-cat="vintage label etiquette packaging">Etiquetas</button>
-        </div>
-      </div>
-      <div class="nav-parent">
-        <button class="nav-parent-btn">Fotografía <span class="nav-arrow">›</span></button>
-        <div class="nav-children">
-          <button class="nav-child-btn" data-cat="daguerreotype portrait photograph vintage">Daguerreotipos</button>
-          <button class="nav-child-btn" data-cat="vintage portrait photograph 19th century">Retratos foto</button>
-          <button class="nav-child-btn" data-cat="vintage city photograph street 19th century">Ciudades antiguas</button>
-        </div>
-      </div>
-      <button class="random-btn" id="randomBtn">Aleatoria</button>
-    </nav>
+      <nav class="nav" id="navMenu">
+           <div class="nav-parent">
+             <button class="nav-parent-btn">Naturaleza <span class="nav-arrow">›</span></button>
+             <div class="nav-children">
+               <button class="nav-child-btn" data-source="wiki" data-cat="Botanical_illustrations">Flora</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Illustrations_of_animals">Fauna</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Illustrations_of_fungi">Hongos</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Marine_biology_illustrations">Océanos</button>
+             </div>
+           </div>
+           <div class="nav-parent">
+             <button class="nav-parent-btn">Arte <span class="nav-arrow">›</span></button>
+             <div class="nav-children">
+               <button class="nav-child-btn" data-source="met" data-cat="European Paintings">Pintura europea</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Engravings">Grabado</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Lithographs">Litografía</button>
+               <button class="nav-child-btn" data-source="met" data-cat="Asian Art">Arte oriental</button>
+             </div>
+           </div>
+           <div class="nav-parent">
+             <button class="nav-parent-btn">Cosmos y ciencia <span class="nav-arrow">›</span></button>
+             <div class="nav-children">
+               <button class="nav-child-btn" data-source="wiki" data-cat="19th-century_celestial_maps">Astronomía</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Old_celestial_maps">Mapas celestes</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Natural_history_illustrations">Historia natural</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Anatomical_illustrations">Anatomía</button>
+             </div>
+           </div>
+           <div class="nav-parent">
+             <button class="nav-parent-btn">Mundo antiguo <span class="nav-arrow">›</span></button>
+             <div class="nav-children">
+               <button class="nav-child-btn" data-source="met" data-cat="Egyptian Art">Egipto</button>
+               <button class="nav-child-btn" data-source="met" data-cat="Greek and Roman Art">Grecia y Roma</button>
+               <button class="nav-child-btn" data-source="met" data-cat="The American Wing">Mesoamérica</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Illustrations_of_ancient_Rome">Arqueología</button>
+             </div>
+           </div>
+           <div class="nav-parent">
+             <button class="nav-parent-btn">Cartografía <span class="nav-arrow">›</span></button>
+             <div class="nav-children">
+               <button class="nav-child-btn" data-source="wiki" data-cat="Old_maps_of_the_world">Mapas del mundo</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Portolan_charts">Portulanos</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Pictorial_maps">Mapas ilustrados</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Historical_maps_of_cities">Ciudades</button>
+             </div>
+           </div>
+           <div class="nav-parent">
+             <button class="nav-parent-btn">Fotografía histórica <span class="nav-arrow">›</span></button>
+             <div class="nav-children">
+               <button class="nav-child-btn" data-source="met" data-cat="Photographs">Fotografía</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Daguerreotypes">Daguerreotipos</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="19th-century_portrait_photographs">Retratos</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Historic_photographs_of_cities">Ciudades antiguas</button>
+             </div>
+           </div>
+           <div class="nav-parent">
+             <button class="nav-parent-btn">Imprenta y cultura <span class="nav-arrow">›</span></button>
+             <div class="nav-children">
+               <button class="nav-child-btn" data-source="wiki" data-cat="Vintage_advertisements">Publicidad vintage</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Woodcuts">Xilografía</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Decorated_initials">Letras decoradas</button>
+               <button class="nav-child-btn" data-source="wiki" data-cat="Illuminated_manuscripts">Manuscritos iluminados</button>
+             </div>
+           </div>
+           <button class="random-btn" id="randomBtn">Aleatoria</button>
+         </nav>
 
     <div class="library-panel" id="libraryPanel">
       <button class="library-back" id="libraryBack">← Categorías</button>
@@ -549,43 +184,88 @@ header {
 </div>
 
 <script>
-const API = 'https://en.wikipedia.org/w/api.php';
+const WIKI_API = 'https://commons.wikimedia.org/w/api.php';
+const MET_API = 'https://collectionapi.metmuseum.org/public/collection/v1';
 let dragState = null, resizeState = null, itemCount = 0;
-let currentCat = '';
-let isLoading = false, hasMore = true, lastOffset = 0;
+let currentCat = '', currentSource = 'wiki';
+let isLoading = false, hasMore = true;
+let metIds = [], metIndex = 0;
+let wikiContinue = null;
+let isGrayscale = true;
 
-// FETCH
-async function fetchImages(query, count = 20, offset = 0) {
-  const p = new URLSearchParams({
-    action: 'query', generator: 'search',
-    gsrsearch: `${query} filetype:bitmap`,
-    gsrnamespace: 6, gsrlimit: count,
-    gsroffset: offset,
-    prop: 'imageinfo', iiprop: 'url|size',
+async function fetchWiki(category, continueKey = null) {
+  const params = {
+    action: 'query', generator: 'categorymembers',
+    gcmtitle: `Category:${category}`, gcmtype: 'file',
+    gcmlimit: 20, prop: 'imageinfo', iiprop: 'url|size',
     iiurlwidth: 300, format: 'json', origin: '*'
-  });
+  };
+  if (continueKey) params.gcmcontinue = continueKey;
+  const p = new URLSearchParams(params);
   try {
-    const r = await fetch(`${API}?${p}`);
+    const r = await fetch(`${WIKI_API}?${p}`);
     const d = await r.json();
     return {
       imgs: d.query?.pages ? Object.values(d.query.pages)
         .filter(p => p.imageinfo?.[0]?.thumburl)
         .map(p => ({ thumb: p.imageinfo[0].thumburl, full: p.imageinfo[0].url })) : [],
-      more: !!d.continue
+      more: !!d.continue,
+      nextKey: d.continue?.gcmcontinue || null
     };
+  } catch { return { imgs: [], more: false, nextKey: null }; }
+}
+
+async function fetchMet(department, startIndex = 0) {
+  try {
+    if (startIndex === 0) {
+      const depts = await fetch(`${MET_API}/departments`);
+      const deptData = await depts.json();
+      const dept = deptData.departments?.find(d =>
+        d.displayName.toLowerCase().includes(department.toLowerCase())
+      );
+      if (!dept) return { imgs: [], more: false };
+      const search = await fetch(`${MET_API}/objects?departmentIds=${dept.departmentId}&isPublicDomain=true`);
+      const searchData = await search.json();
+      metIds = searchData.objectIDs || [];
+    }
+    const batch = metIds.slice(startIndex, startIndex + 20);
+    const imgs = [];
+    await Promise.all(batch.map(async id => {
+      try {
+        const r = await fetch(`${MET_API}/objects/${id}`);
+        const obj = await r.json();
+        if (obj.isPublicDomain && obj.primaryImageSmall) {
+          imgs.push({ thumb: obj.primaryImageSmall, full: obj.primaryImage });
+        }
+      } catch {}
+    }));
+    return { imgs, more: startIndex + 20 < metIds.length };
   } catch { return { imgs: [], more: false }; }
 }
 
-async function loadCat(cat, reset = true) {
+async function loadCat(cat, reset = true, source = currentSource) {
   if (isLoading) return;
   const lib = document.getElementById('library');
   if (reset) {
     lib.innerHTML = '<div class="lib-msg">Cargando...</div>';
-    lastOffset = 0;
     hasMore = true;
+    wikiContinue = null;
+    metIds = [];
+    metIndex = 0;
   }
   isLoading = true;
-  const { imgs, more } = await fetchImages(cat, 20, lastOffset);
+  let imgs = [], more = false;
+  if (source === 'wiki') {
+    const result = await fetchWiki(cat, reset ? null : wikiContinue);
+    imgs = result.imgs;
+    more = result.more;
+    wikiContinue = result.nextKey;
+  } else {
+    const result = await fetchMet(cat, reset ? 0 : metIndex);
+    imgs = result.imgs;
+    more = result.more;
+    metIndex += 20;
+  }
   if (reset) lib.innerHTML = '';
   if (!imgs.length && reset) {
     lib.innerHTML = '<div class="lib-msg">Sin resultados</div>';
@@ -596,25 +276,23 @@ async function loadCat(cat, reset = true) {
     const d = document.createElement('div');
     d.className = 'lib-img';
     d.innerHTML = `<img src="${img.thumb}" loading="lazy"><div class="overlay">+</div>`;
+    if (!isGrayscale) d.style.filter = 'none';
     d.addEventListener('click', () => {
       addItem(img.thumb, img.full);
       if (window.innerWidth <= 640) toggleSidebarFn();
     });
     lib.appendChild(d);
   });
-  lastOffset += 20;
   hasMore = more;
   isLoading = false;
 }
 
-// SCROLL INFINITO
 document.getElementById('library').addEventListener('scroll', function() {
   if (this.scrollHeight - this.scrollTop - this.clientHeight < 150 && !isLoading && hasMore) {
-    loadCat(currentCat, false);
+    loadCat(currentCat, false, currentSource);
   }
 });
 
-// ADD TO CANVAS
 function addItem(thumb, full) {
   document.getElementById('canvasHint').style.opacity = '0';
   const wrap = document.getElementById('canvasWrap');
@@ -625,7 +303,8 @@ function addItem(thumb, full) {
   const el = document.createElement('div');
   el.className = 'c-item';
   el.dataset.id = id;
-  el.style.cssText = `left:${x}px;top:${y}px;width:${size}px;height:${size}px;z-index:${id}`;
+  el.style.cssText = `left:${x}px;top:${y}px;width:${size}px;z-index:${id}`;
+  const filterStyle = isGrayscale ? 'filter:grayscale(100%)' : '';
   el.innerHTML = `
     <div class="c-inner">
       <div class="c-controls">
@@ -633,7 +312,7 @@ function addItem(thumb, full) {
         <button class="c-ctrl" data-a="down">↓</button>
         <button class="c-ctrl" data-a="del">×</button>
       </div>
-      <img src="${thumb}" data-full="${full}" draggable="false">
+      <img src="${thumb}" data-full="${full}" draggable="false" style="${filterStyle}">
       <div class="c-resize"></div>
     </div>`;
   el.addEventListener('mousedown', onItemDown);
@@ -659,13 +338,11 @@ function selectItem(el) {
   if (el) el.classList.add('selected');
 }
 
-// DRAG
 function onItemDown(e) {
   if (e.target.classList.contains('c-resize') || e.target.classList.contains('c-ctrl')) return;
   e.preventDefault();
-  const el = e.currentTarget;
-  selectItem(el);
-  dragState = { el, sx: e.clientX - el.offsetLeft, sy: e.clientY - el.offsetTop };
+  selectItem(e.currentTarget);
+  dragState = { el: e.currentTarget, sx: e.clientX - e.currentTarget.offsetLeft, sy: e.clientY - e.currentTarget.offsetTop };
 }
 
 function onResizeDown(e) {
@@ -688,7 +365,6 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseup', () => { dragState = null; resizeState = null; });
 
-// TOUCH
 function onItemTouch(e) {
   if (e.target.classList.contains('c-resize')) return;
   selectItem(e.currentTarget);
@@ -724,7 +400,6 @@ document.getElementById('canvasWrap').addEventListener('mousedown', e => {
   if (e.target === e.currentTarget || e.target.closest('.canvas-hint')) selectItem(null);
 });
 
-// ACCORDION
 document.querySelectorAll('.nav-parent-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const isOpen = btn.classList.contains('open');
@@ -738,11 +413,12 @@ document.querySelectorAll('.nav-child-btn').forEach(btn => {
     document.querySelectorAll('.nav-child-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentCat = btn.dataset.cat;
+    currentSource = btn.dataset.source || 'wiki';
     document.getElementById('statusCat').textContent = btn.textContent.trim();
     document.getElementById('libraryCatLabel').textContent = btn.textContent.trim();
     document.getElementById('navMenu').classList.add('hidden');
     document.getElementById('libraryPanel').classList.add('visible');
-    loadCat(currentCat);
+    loadCat(currentCat, true, currentSource);
   });
 });
 
@@ -751,18 +427,26 @@ document.getElementById('libraryBack').addEventListener('click', () => {
   document.getElementById('libraryPanel').classList.remove('visible');
 });
 
-// RANDOM
 document.getElementById('randomBtn').addEventListener('click', async () => {
-  const terms = ['engraving antique', 'woodcut print historical', 'lithograph 19th century', 'etching vintage', 'daguerreotype portrait'];
-  const { imgs } = await fetchImages(terms[Math.floor(Math.random() * terms.length)], 5);
+  const cats = ['Botanical_illustrations', 'Celestial_atlases', 'Old_maps_of_the_world', 'Prints_by_technique', 'Illustrations_of_animals'];
+  const cat = cats[Math.floor(Math.random() * cats.length)];
+  const { imgs } = await fetchWiki(cat);
   if (imgs.length) addItem(imgs[Math.floor(Math.random() * imgs.length)].thumb, imgs[0].full);
 });
 
-// CLEAR
 document.getElementById('clearBtn').addEventListener('click', () => {
   document.querySelectorAll('.c-item').forEach(el => el.remove());
   document.getElementById('canvasHint').style.opacity = '1';
   updateStatus();
+});
+
+document.getElementById('colorBtn').addEventListener('click', () => {
+  isGrayscale = !isGrayscale;
+  const btn = document.getElementById('colorBtn');
+  btn.textContent = isGrayscale ? 'B&N' : 'Color';
+  btn.classList.toggle('active', !isGrayscale);
+  const f = isGrayscale ? 'grayscale(100%)' : 'none';
+  document.querySelectorAll('.c-item img, .lib-img').forEach(el => el.style.filter = f);
 });
 
 function updateStatus() {
@@ -770,11 +454,9 @@ function updateStatus() {
   document.getElementById('statusItems').textContent = `${n} elemento${n !== 1 ? 's' : ''}`;
 }
 
-// MOBILE
 function toggleSidebarFn() { document.getElementById('sidebar').classList.toggle('open'); }
 document.getElementById('toggleSidebar').addEventListener('click', toggleSidebarFn);
 
-// DOWNLOAD
 document.getElementById('downloadBtn').addEventListener('click', async () => {
   const btn = document.getElementById('downloadBtn');
   btn.textContent = '...'; btn.disabled = true;
@@ -798,7 +480,6 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
   finally { btn.textContent = 'Descargar'; btn.disabled = false; }
 });
 
-// LOGO ANIMATION
 function animateLogo() {
   const el = document.getElementById('logoText');
   el.innerHTML = '';
