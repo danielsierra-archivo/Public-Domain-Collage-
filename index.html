@@ -3,76 +3,243 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>PUBLIC DOMAIN COLLAGE</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&display=swap" rel="stylesheet">
+<title>PUBLIC DOMAIN ARCHITECTURE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root { --black: #0a0a0a; --white: #f5f5f3; --gray: #888; --border: #222; }
-html, body { height: 100%; overflow: hidden; background: var(--black); color: var(--white); font-family: 'Space Mono', monospace; -webkit-font-smoothing: antialiased; }
-header { position: fixed; top: 0; left: 0; right: 0; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid var(--border); background: var(--black); z-index: 200; }
-.logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.12em; color: var(--white); line-height: 1; display: inline-flex; }
+:root {
+  --bg: #f8f8f6;
+  --white: #ffffff;
+  --black: #111110;
+  --gray: #999;
+  --light: #e8e8e4;
+  --accent: #1a1a18;
+  --border: #e0e0da;
+}
+html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--black); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+
+/* HEADER */
+header {
+  position: fixed; top: 0; left: 0; right: 0; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; border-bottom: 1px solid var(--border);
+  background: var(--white); z-index: 200;
+}
+.logo-wrap { display: flex; align-items: baseline; gap: 10px; }
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 0.18em;
+  color: var(--black); line-height: 1; display: inline-flex;
+}
 .logo .char { display: inline-block; animation: charIn 0.05s ease forwards; opacity: 0; }
 @keyframes charIn { to { opacity: 1; } }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-.logo-sub { font-family: 'Permanent Marker', cursive; font-size: 16px; color: var(--gray); margin-left: 8px; animation: pulse 3s ease-in-out infinite; animation-delay: 1.5s; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.logo-sub {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-size: 15px;
+  color: var(--gray); letter-spacing: 0.02em;
+  animation: pulse 4s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
 .header-right { display: flex; align-items: center; gap: 8px; }
-.btn { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 12px; border: 1px solid var(--border); background: transparent; color: var(--gray); cursor: pointer; transition: all 0.1s; }
-.btn:hover { border-color: var(--white); color: var(--white); }
-.btn-primary { border-color: var(--white); color: var(--black); background: var(--white); }
-.btn-primary:hover { background: var(--gray); border-color: var(--gray); color: var(--black); }
-.btn.active { border-color: var(--white); color: var(--white); }
-.app { display: flex; position: fixed; top: 48px; bottom: 28px; left: 0; right: 0; }
-.sidebar { width: 220px; flex-shrink: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; background: var(--black); overflow: hidden; }
+.btn {
+  font-family: 'DM Sans', sans-serif; font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 6px 14px; border: 1px solid var(--border);
+  background: transparent; color: var(--gray); cursor: pointer;
+  transition: all 0.15s; border-radius: 2px;
+}
+.btn:hover { border-color: var(--black); color: var(--black); }
+.btn-primary { background: var(--black); color: var(--white); border-color: var(--black); }
+.btn-primary:hover { background: #333; border-color: #333; }
+.btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
+
+/* LAYOUT */
+.app { display: flex; position: fixed; top: 52px; bottom: 28px; left: 0; right: 0; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 230px; flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  background: var(--white); overflow: hidden;
+}
 .nav { display: flex; flex-direction: column; overflow-y: auto; flex: 1; }
 .nav::-webkit-scrollbar { width: 3px; }
 .nav::-webkit-scrollbar-thumb { background: var(--border); }
 .nav.hidden { display: none; }
-.nav-parent { border-bottom: 1px solid var(--border); }
-.nav-parent-btn { width: 100%; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; padding: 10px 16px; background: transparent; border: none; color: var(--gray); cursor: pointer; text-align: left; display: flex; align-items: center; justify-content: space-between; transition: color 0.1s; }
-.nav-parent-btn:hover, .nav-parent-btn.open { color: var(--white); }
-.nav-arrow { font-size: 10px; transition: transform 0.2s; }
-.nav-parent-btn.open .nav-arrow { transform: rotate(90deg); }
-.nav-children { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
-.nav-children.open { max-height: 300px; }
-.nav-child-btn { width: 100%; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 16px 7px 24px; background: transparent; border: none; border-top: 1px solid var(--border); color: var(--gray); cursor: pointer; text-align: left; transition: all 0.1s; display: block; }
-.nav-child-btn:hover, .nav-child-btn.active { color: var(--white); background: #111; }
-.random-btn { width: 100%; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; padding: 10px 16px; background: transparent; border: none; border-top: 1px solid var(--border); color: var(--white); cursor: pointer; text-align: left; font-style: italic; transition: color 0.1s; margin-top: auto; }
-.random-btn:hover { color: var(--gray); }
+
+/* SEARCH */
+.search-wrap {
+  padding: 12px; border-bottom: 1px solid var(--border);
+  display: flex; gap: 6px; flex-shrink: 0;
+}
+.search-input {
+  flex: 1; font-family: 'DM Sans', sans-serif; font-size: 11px;
+  letter-spacing: 0.04em; padding: 7px 10px;
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--black); outline: none; border-radius: 2px;
+}
+.search-input::placeholder { color: var(--gray); }
+.search-input:focus { border-color: var(--black); }
+.search-btn {
+  font-family: 'DM Sans', sans-serif; font-size: 11px;
+  padding: 7px 12px; background: var(--black); border: none;
+  color: var(--white); cursor: pointer; border-radius: 2px;
+  transition: background 0.15s; flex-shrink: 0;
+}
+.search-btn:hover { background: #333; }
+
+/* NAV ITEMS */
+.nav-item {
+  border-bottom: 1px solid var(--border);
+}
+.nav-btn {
+  width: 100%; font-family: 'DM Sans', sans-serif;
+  font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+  font-weight: 400; padding: 14px 16px;
+  background: transparent; border: none; color: var(--gray);
+  cursor: pointer; text-align: left; transition: all 0.15s;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-btn:hover, .nav-btn.active { color: var(--black); }
+.nav-btn.active { font-weight: 500; }
+.nav-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--border); flex-shrink: 0;
+  transition: background 0.15s;
+}
+.nav-btn.active .nav-dot { background: var(--black); }
+
+.random-btn {
+  width: 100%; font-family: 'DM Serif Display', serif;
+  font-style: italic; font-size: 16px;
+  padding: 14px 16px; background: transparent; border: none;
+  border-top: 1px solid var(--border); color: var(--gray);
+  cursor: pointer; text-align: left; transition: color 0.15s;
+  margin-top: auto;
+}
+.random-btn:hover { color: var(--black); }
+
+/* LIBRARY PANEL */
 .library-panel { display: none; flex-direction: column; flex: 1; overflow: hidden; }
 .library-panel.visible { display: flex; }
-.library-back { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 16px; background: transparent; border: none; border-bottom: 1px solid var(--border); color: var(--gray); cursor: pointer; text-align: left; transition: color 0.1s; flex-shrink: 0; }
-.library-back:hover { color: var(--white); }
-.library-cat-label { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.05em; padding: 8px 16px; color: var(--white); border-bottom: 1px solid var(--border); flex-shrink: 0; }
-.library { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; align-content: start; width: 100%; }
+.library-back {
+  font-family: 'DM Sans', sans-serif; font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 12px 16px; background: transparent; border: none;
+  border-bottom: 1px solid var(--border); color: var(--gray);
+  cursor: pointer; text-align: left; transition: color 0.15s; flex-shrink: 0;
+}
+.library-back:hover { color: var(--black); }
+.library-cat-label {
+  font-family: 'DM Sans', sans-serif; font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 16px; color: var(--black); font-weight: 500;
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+
+/* LIBRARY GRID */
+.library {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  padding: 8px; display: grid;
+  grid-template-columns: 1fr 1fr; gap: 4px;
+  align-content: start; width: 100%;
+}
 .library::-webkit-scrollbar { width: 3px; }
 .library::-webkit-scrollbar-thumb { background: var(--border); }
-.lib-img { position: relative; width: 100%; padding-bottom: 130%; overflow: hidden; cursor: pointer; background: #111; filter: grayscale(100%); transition: filter 0.2s; }
-.lib-img:hover { filter: grayscale(0%) contrast(1.1); }
-.lib-img img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
-.lib-img .overlay { position: absolute; inset: 0; background: rgba(245,245,243,0.15); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.15s; font-size: 18px; color: var(--white); font-family: 'Bebas Neue', sans-serif; }
+.lib-img {
+  position: relative; width: 100%; padding-bottom: 130%;
+  overflow: hidden; cursor: pointer; background: var(--light);
+  transition: opacity 0.2s;
+}
+.lib-img:hover { opacity: 0.85; }
+.lib-img img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  display: block; pointer-events: none;
+}
+.lib-img .overlay {
+  position: absolute; inset: 0;
+  background: rgba(17,17,16,0.12);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.15s;
+  font-family: 'DM Sans', sans-serif; font-size: 20px;
+  color: var(--white); font-weight: 300;
+}
 .lib-img:hover .overlay { opacity: 1; }
-.lib-msg { grid-column: 1/-1; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); padding: 16px 0; text-align: center; }
-.canvas-wrap { flex: 1; position: relative; overflow: hidden; background: #0f0f0f; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 48px 48px; }
-.canvas-hint { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; gap: 6px; transition: opacity 0.3s; }
-.canvas-hint-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 96px); letter-spacing: 0.05em; color: var(--white); opacity: 0.04; line-height: 1; text-align: center; }
-.canvas-hint-sub { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); opacity: 0.4; }
+.lib-msg {
+  grid-column: 1/-1; font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gray);
+  padding: 20px 0; text-align: center;
+}
+
+/* CANVAS */
+.canvas-wrap {
+  flex: 1; position: relative; overflow: hidden; background: var(--bg);
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-opacity: 0.3;
+}
+.canvas-hint {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  pointer-events: none; gap: 8px; transition: opacity 0.3s;
+}
+.canvas-hint-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6vw, 80px);
+  letter-spacing: 0.12em; color: var(--black); opacity: 0.05;
+  line-height: 1.1; text-align: center;
+}
+.canvas-hint-sub {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gray); opacity: 0.5;
+}
+
+/* CANVAS ITEMS */
 .c-item { position: absolute; cursor: grab; user-select: none; }
 .c-item:active { cursor: grabbing; }
-.c-item.selected .c-inner { outline: 1px solid var(--white); outline-offset: 2px; }
+.c-item.selected .c-inner { outline: 1.5px solid var(--black); outline-offset: 2px; }
 .c-inner { position: relative; width: 100%; height: 100%; }
 .c-item img { width: 100%; height: auto; display: block; pointer-events: none; }
-.c-controls { position: absolute; top: -26px; right: 0; display: none; gap: 2px; }
+.c-controls { position: absolute; top: -28px; right: 0; display: none; gap: 2px; }
 .c-item.selected .c-controls { display: flex; }
-.c-ctrl { width: 22px; height: 22px; background: var(--white); color: var(--black); font-size: 11px; font-family: 'Space Mono', monospace; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.1s; }
-.c-ctrl:hover { background: var(--gray); }
-.c-resize { position: absolute; bottom: 0; right: 0; width: 12px; height: 12px; background: var(--white); cursor: se-resize; display: none; }
+.c-ctrl {
+  width: 24px; height: 24px; background: var(--black); color: var(--white);
+  font-size: 11px; font-family: 'DM Sans', sans-serif; border: none;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.1s; border-radius: 2px;
+}
+.c-ctrl:hover { background: #444; }
+.c-resize {
+  position: absolute; bottom: 0; right: 0; width: 12px; height: 12px;
+  background: var(--black); cursor: se-resize; display: none; border-radius: 2px 0 0 0;
+}
 .c-item.selected .c-resize { display: block; }
-.statusbar { position: fixed; bottom: 0; left: 0; right: 0; height: 28px; display: flex; align-items: center; padding: 0 16px; gap: 24px; border-top: 1px solid var(--border); background: var(--black); z-index: 200; }
-.statusbar span { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); }
-.toggle-sidebar { display: none; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; background: transparent; border: 1px solid var(--border); color: var(--gray); cursor: pointer; }
-.toggle-sidebar:hover { color: var(--white); border-color: var(--white); }
+
+/* STATUSBAR */
+.statusbar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 28px;
+  display: flex; align-items: center; padding: 0 20px; gap: 24px;
+  border-top: 1px solid var(--border); background: var(--white); z-index: 200;
+}
+.statusbar span {
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray);
+}
+
+/* MOBILE */
+.toggle-sidebar {
+  display: none; font-family: 'DM Sans', sans-serif; font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 6px 12px;
+  background: transparent; border: 1px solid var(--border); color: var(--gray); cursor: pointer;
+  border-radius: 2px;
+}
+.toggle-sidebar:hover { color: var(--black); border-color: var(--black); }
 @media (max-width: 640px) {
-  .sidebar { position: fixed; left: 0; top: 48px; bottom: 28px; transform: translateX(-100%); transition: transform 0.2s; z-index: 150; }
+  .sidebar { position: fixed; left: 0; top: 52px; bottom: 28px; transform: translateX(-100%); transition: transform 0.2s; z-index: 150; }
   .sidebar.open { transform: translateX(0); }
   .canvas-wrap { width: 100%; }
   .toggle-sidebar { display: flex; }
@@ -82,9 +249,9 @@ header { position: fixed; top: 0; left: 0; right: 0; height: 48px; display: flex
 <body>
 
 <header>
-  <div style="display:flex;align-items:baseline;gap:6px;">
+  <div class="logo-wrap">
     <span class="logo" id="logoText"></span>
-    <span class="logo-sub">collage</span>
+    <span class="logo-sub">Collage</span>
   </div>
   <div class="header-right">
     <button class="toggle-sidebar" id="toggleSidebar">Imágenes</button>
@@ -96,72 +263,40 @@ header { position: fixed; top: 0; left: 0; right: 0; height: 48px; display: flex
 
 <div class="app">
   <aside class="sidebar" id="sidebar">
-      <nav class="nav" id="navMenu">
-           <div class="nav-parent">
-             <button class="nav-parent-btn">Naturaleza <span class="nav-arrow">›</span></button>
-             <div class="nav-children">
-               <button class="nav-child-btn" data-source="wiki" data-cat="Botanical_illustrations">Flora</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Illustrations_of_animals">Fauna</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Illustrations_of_fungi">Hongos</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Marine_biology_illustrations">Océanos</button>
-             </div>
-           </div>
-           <div class="nav-parent">
-             <button class="nav-parent-btn">Arte <span class="nav-arrow">›</span></button>
-             <div class="nav-children">
-               <button class="nav-child-btn" data-source="met" data-cat="European Paintings">Pintura europea</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Engravings">Grabado</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Lithographs">Litografía</button>
-               <button class="nav-child-btn" data-source="met" data-cat="Asian Art">Arte oriental</button>
-             </div>
-           </div>
-           <div class="nav-parent">
-             <button class="nav-parent-btn">Cosmos y ciencia <span class="nav-arrow">›</span></button>
-             <div class="nav-children">
-               <button class="nav-child-btn" data-source="wiki" data-cat="19th-century_celestial_maps">Astronomía</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Old_celestial_maps">Mapas celestes</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Natural_history_illustrations">Historia natural</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Anatomical_illustrations">Anatomía</button>
-             </div>
-           </div>
-           <div class="nav-parent">
-             <button class="nav-parent-btn">Mundo antiguo <span class="nav-arrow">›</span></button>
-             <div class="nav-children">
-               <button class="nav-child-btn" data-source="met" data-cat="Egyptian Art">Egipto</button>
-               <button class="nav-child-btn" data-source="met" data-cat="Greek and Roman Art">Grecia y Roma</button>
-               <button class="nav-child-btn" data-source="met" data-cat="The American Wing">Mesoamérica</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Illustrations_of_ancient_Rome">Arqueología</button>
-             </div>
-           </div>
-           <div class="nav-parent">
-             <button class="nav-parent-btn">Cartografía <span class="nav-arrow">›</span></button>
-             <div class="nav-children">
-               <button class="nav-child-btn" data-source="wiki" data-cat="Old_maps_of_the_world">Mapas del mundo</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Portolan_charts">Portulanos</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Pictorial_maps">Mapas ilustrados</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Historical_maps_of_cities">Ciudades</button>
-             </div>
-           </div>
-           <div class="nav-parent">
-             <button class="nav-parent-btn">Fotografía histórica <span class="nav-arrow">›</span></button>
-             <div class="nav-children">
-               <button class="nav-child-btn" data-source="met" data-cat="Photographs">Fotografía</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Daguerreotypes">Daguerreotipos</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="19th-century_portrait_photographs">Retratos</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Historic_photographs_of_cities">Ciudades antiguas</button>
-             </div>
-           </div>
-           <div class="nav-parent">
-             <button class="nav-parent-btn">Imprenta y cultura <span class="nav-arrow">›</span></button>
-             <div class="nav-children">
-               <button class="nav-child-btn" data-source="wiki" data-cat="Vintage_advertisements">Publicidad vintage</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Woodcuts">Xilografía</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Decorated_initials">Letras decoradas</button>
-               <button class="nav-child-btn" data-source="wiki" data-cat="Illuminated_manuscripts">Manuscritos iluminados</button>
-             </div>
-           </div>
-           <button class="random-btn" id="randomBtn">Aleatoria</button>
-         </nav>
+    <nav class="nav" id="navMenu">
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Buscar...">
+        <button class="search-btn" id="searchBtn">→</button>
+      </div>
+
+      <div class="nav-item">
+        <button class="nav-btn" data-q="historic building architecture photograph facade exterior">
+          Edificios <span class="nav-dot"></span>
+        </button>
+      </div>
+      <div class="nav-item">
+        <button class="nav-btn" data-q="architectural drawing plan blueprint elevation section vintage">
+          Planos y dibujos <span class="nav-dot"></span>
+        </button>
+      </div>
+      <div class="nav-item">
+        <button class="nav-btn" data-q="ancient ruins archaeology Greece Rome Egypt Mesoamerica architecture">
+          Ruinas <span class="nav-dot"></span>
+        </button>
+      </div>
+      <div class="nav-item">
+        <button class="nav-btn" data-q="historic city view engraving urban panorama 19th century">
+          Ciudades <span class="nav-dot"></span>
+        </button>
+      </div>
+      <div class="nav-item">
+        <button class="nav-btn" data-q="architectural ornament detail capital column molding decorative">
+          Ornamento <span class="nav-dot"></span>
+        </button>
+      </div>
+
+      <button class="random-btn" id="randomBtn">Aleatoria</button>
+    </nav>
 
     <div class="library-panel" id="libraryPanel">
       <button class="library-back" id="libraryBack">← Categorías</button>
@@ -172,7 +307,7 @@ header { position: fixed; top: 0; left: 0; right: 0; height: 48px; display: flex
 
   <div class="canvas-wrap" id="canvasWrap">
     <div class="canvas-hint" id="canvasHint">
-      <div class="canvas-hint-title">PUBLIC DOMAIN<br>COLLAGE</div>
+      <div class="canvas-hint-title">PUBLIC DOMAIN<br>ARCHITECTURE</div>
       <div class="canvas-hint-sub">Selecciona imágenes para comenzar</div>
     </div>
   </div>
@@ -185,23 +320,19 @@ header { position: fixed; top: 0; left: 0; right: 0; height: 48px; display: flex
 
 <script>
 const WIKI_API = 'https://commons.wikimedia.org/w/api.php';
-const MET_API = 'https://collectionapi.metmuseum.org/public/collection/v1';
 let dragState = null, resizeState = null, itemCount = 0;
-let currentCat = '', currentSource = 'wiki';
-let isLoading = false, hasMore = true;
-let metIds = [], metIndex = 0;
-let wikiContinue = null;
-let isGrayscale = true;
+let currentQ = '';
+let isLoading = false, hasMore = true, lastOffset = 0;
+let isGrayscale = false;
 
-async function fetchWiki(category, continueKey = null) {
-  const params = {
-    action: 'query', generator: 'categorymembers',
-    gcmtitle: `Category:${category}`, gcmtype: 'file',
-    gcmlimit: 20, prop: 'imageinfo', iiprop: 'url|size',
+async function fetchImages(query, offset = 0) {
+  const p = new URLSearchParams({
+    action: 'query', generator: 'search',
+    gsrsearch: `${query} filetype:bitmap`,
+    gsrnamespace: 6, gsrlimit: 20, gsroffset: offset,
+    prop: 'imageinfo', iiprop: 'url|size',
     iiurlwidth: 300, format: 'json', origin: '*'
-  };
-  if (continueKey) params.gcmcontinue = continueKey;
-  const p = new URLSearchParams(params);
+  });
   try {
     const r = await fetch(`${WIKI_API}?${p}`);
     const d = await r.json();
@@ -209,89 +340,55 @@ async function fetchWiki(category, continueKey = null) {
       imgs: d.query?.pages ? Object.values(d.query.pages)
         .filter(p => p.imageinfo?.[0]?.thumburl)
         .map(p => ({ thumb: p.imageinfo[0].thumburl, full: p.imageinfo[0].url })) : [],
-      more: !!d.continue,
-      nextKey: d.continue?.gcmcontinue || null
+      more: !!d.continue
     };
-  } catch { return { imgs: [], more: false, nextKey: null }; }
-}
-
-async function fetchMet(department, startIndex = 0) {
-  try {
-    if (startIndex === 0) {
-      const depts = await fetch(`${MET_API}/departments`);
-      const deptData = await depts.json();
-      const dept = deptData.departments?.find(d =>
-        d.displayName.toLowerCase().includes(department.toLowerCase())
-      );
-      if (!dept) return { imgs: [], more: false };
-      const search = await fetch(`${MET_API}/objects?departmentIds=${dept.departmentId}&isPublicDomain=true`);
-      const searchData = await search.json();
-      metIds = searchData.objectIDs || [];
-    }
-    const batch = metIds.slice(startIndex, startIndex + 20);
-    const imgs = [];
-    await Promise.all(batch.map(async id => {
-      try {
-        const r = await fetch(`${MET_API}/objects/${id}`);
-        const obj = await r.json();
-        if (obj.isPublicDomain && obj.primaryImageSmall) {
-          imgs.push({ thumb: obj.primaryImageSmall, full: obj.primaryImage });
-        }
-      } catch {}
-    }));
-    return { imgs, more: startIndex + 20 < metIds.length };
   } catch { return { imgs: [], more: false }; }
 }
 
-async function loadCat(cat, reset = true, source = currentSource) {
+async function loadImages(query, reset = true) {
   if (isLoading) return;
   const lib = document.getElementById('library');
   if (reset) {
     lib.innerHTML = '<div class="lib-msg">Cargando...</div>';
-    hasMore = true;
-    wikiContinue = null;
-    metIds = [];
-    metIndex = 0;
+    lastOffset = 0; hasMore = true;
   }
   isLoading = true;
-  let imgs = [], more = false;
-  if (source === 'wiki') {
-    const result = await fetchWiki(cat, reset ? null : wikiContinue);
-    imgs = result.imgs;
-    more = result.more;
-    wikiContinue = result.nextKey;
-  } else {
-    const result = await fetchMet(cat, reset ? 0 : metIndex);
-    imgs = result.imgs;
-    more = result.more;
-    metIndex += 20;
-  }
+  const { imgs, more } = await fetchImages(query, lastOffset);
   if (reset) lib.innerHTML = '';
   if (!imgs.length && reset) {
     lib.innerHTML = '<div class="lib-msg">Sin resultados</div>';
-    isLoading = false;
-    return;
+    isLoading = false; return;
   }
   imgs.forEach(img => {
     const d = document.createElement('div');
     d.className = 'lib-img';
     d.innerHTML = `<img src="${img.thumb}" loading="lazy"><div class="overlay">+</div>`;
-    if (!isGrayscale) d.style.filter = 'none';
+    if (isGrayscale) d.style.filter = 'grayscale(100%)';
     d.addEventListener('click', () => {
       addItem(img.thumb, img.full);
       if (window.innerWidth <= 640) toggleSidebarFn();
     });
     lib.appendChild(d);
   });
+  lastOffset += 20;
   hasMore = more;
   isLoading = false;
 }
 
 document.getElementById('library').addEventListener('scroll', function() {
   if (this.scrollHeight - this.scrollTop - this.clientHeight < 150 && !isLoading && hasMore) {
-    loadCat(currentCat, false, currentSource);
+    loadImages(currentQ, false);
   }
 });
+
+function showLibrary(label, query) {
+  currentQ = query;
+  document.getElementById('statusCat').textContent = label;
+  document.getElementById('libraryCatLabel').textContent = label;
+  document.getElementById('navMenu').classList.add('hidden');
+  document.getElementById('libraryPanel').classList.add('visible');
+  loadImages(query);
+}
 
 function addItem(thumb, full) {
   document.getElementById('canvasHint').style.opacity = '0';
@@ -400,25 +497,11 @@ document.getElementById('canvasWrap').addEventListener('mousedown', e => {
   if (e.target === e.currentTarget || e.target.closest('.canvas-hint')) selectItem(null);
 });
 
-document.querySelectorAll('.nav-parent-btn').forEach(btn => {
+document.querySelectorAll('.nav-btn[data-q]').forEach(btn => {
   btn.addEventListener('click', () => {
-    const isOpen = btn.classList.contains('open');
-    document.querySelectorAll('.nav-parent-btn').forEach(b => { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
-    if (!isOpen) { btn.classList.add('open'); btn.nextElementSibling.classList.add('open'); }
-  });
-});
-
-document.querySelectorAll('.nav-child-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-child-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentCat = btn.dataset.cat;
-    currentSource = btn.dataset.source || 'wiki';
-    document.getElementById('statusCat').textContent = btn.textContent.trim();
-    document.getElementById('libraryCatLabel').textContent = btn.textContent.trim();
-    document.getElementById('navMenu').classList.add('hidden');
-    document.getElementById('libraryPanel').classList.add('visible');
-    loadCat(currentCat, true, currentSource);
+    showLibrary(btn.textContent.trim(), btn.dataset.q);
   });
 });
 
@@ -427,10 +510,26 @@ document.getElementById('libraryBack').addEventListener('click', () => {
   document.getElementById('libraryPanel').classList.remove('visible');
 });
 
+function doSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) return;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  showLibrary(`"${q}"`, q);
+}
+
+document.getElementById('searchBtn').addEventListener('click', doSearch);
+document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
 document.getElementById('randomBtn').addEventListener('click', async () => {
-  const cats = ['Botanical_illustrations', 'Celestial_atlases', 'Old_maps_of_the_world', 'Prints_by_technique', 'Illustrations_of_animals'];
-  const cat = cats[Math.floor(Math.random() * cats.length)];
-  const { imgs } = await fetchWiki(cat);
+  const queries = [
+    'historic building architecture photograph exterior',
+    'architectural drawing plan elevation vintage',
+    'ancient ruins Greece Rome architecture',
+    'historic city view engraving urban',
+    'architectural ornament column capital detail'
+  ];
+  const q = queries[Math.floor(Math.random() * queries.length)];
+  const { imgs } = await fetchImages(q);
   if (imgs.length) addItem(imgs[Math.floor(Math.random() * imgs.length)].thumb, imgs[0].full);
 });
 
@@ -444,7 +543,7 @@ document.getElementById('colorBtn').addEventListener('click', () => {
   isGrayscale = !isGrayscale;
   const btn = document.getElementById('colorBtn');
   btn.textContent = isGrayscale ? 'B&N' : 'Color';
-  btn.classList.toggle('active', !isGrayscale);
+  btn.classList.toggle('active', isGrayscale);
   const f = isGrayscale ? 'grayscale(100%)' : 'none';
   document.querySelectorAll('.c-item img, .lib-img').forEach(el => el.style.filter = f);
 });
@@ -470,10 +569,10 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
       });
     }
     const canvas = await html2canvas(document.getElementById('canvasWrap'), {
-      useCORS: true, allowTaint: false, backgroundColor: '#0f0f0f', scale: 2
+      useCORS: true, allowTaint: false, backgroundColor: '#f8f8f6', scale: 2
     });
     const link = document.createElement('a');
-    link.download = `pdc-${Date.now()}.jpg`;
+    link.download = `pda-${Date.now()}.jpg`;
     link.href = canvas.toDataURL('image/jpeg', 0.92);
     link.click();
   } catch { alert('Error al exportar. Intenta en Chrome.'); }
@@ -483,17 +582,17 @@ document.getElementById('downloadBtn').addEventListener('click', async () => {
 function animateLogo() {
   const el = document.getElementById('logoText');
   el.innerHTML = '';
-  [...'PUBLIC DOMAIN'].forEach((char, i) => {
+  [...'PUBLIC DOMAIN ARCHITECTURE'].forEach((char, i) => {
     const s = document.createElement('span');
     s.className = 'char';
     s.textContent = char === ' ' ? '\u00A0' : char;
-    s.style.animationDelay = (i * 80) + 'ms';
+    s.style.animationDelay = (i * 50) + 'ms';
     el.appendChild(s);
   });
 }
 
 animateLogo();
-setInterval(animateLogo, 5000);
+setInterval(animateLogo, 6000);
 </script>
 </body>
 </html>
